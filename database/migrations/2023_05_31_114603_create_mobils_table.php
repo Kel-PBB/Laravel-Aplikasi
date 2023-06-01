@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('brand');
             $table->string('harga');
             // $table->string('status');
-            $table->foreignId('mesin')->references('id')->on('speks')->onDelete('cascade');
-            $table->foreignId('bahan_bakar')->references('id')->on('speks')->onDelete('cascade');
-            $table->foreignId('transmisi')->references('id')->on('speks')->onDelete('cascade');
-            $table->foreignId('seat')->references('id')->on('speks')->onDelete('cascade');
-            $table->date('tanggal_tersedia');
+            $table->string('mesin');
+            $table->string('bahan_bakar');
+            $table->string('transmisi');
+            $table->string('seat');
+            $table->date('tanggal_tersedia')->nullable();
             $table->string('gambar')->nullable();
             $table->timestamps();
         });

@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class SpekSeeder extends Seeder
 {
@@ -13,5 +14,22 @@ class SpekSeeder extends Seeder
     public function run(): void
     {
         //
+        DB::table('speks')->insert([[
+            'nama' => 'mesin',
+            'isi' => '12000c',
+        ], 
+        
+        [
+            'nama' => 'bahan bakar',
+            'isi' => 'bensisn',
+        ], 
+        [
+            'nama' => 'seat',
+            'isi' => '5',
+        ],
+        [
+            'nama' => 'tansmisi',
+            'isi' => 'otomatis',
+        ]]);
     }
 }
