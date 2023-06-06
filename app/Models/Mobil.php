@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Mobil extends Model
 {
@@ -17,6 +18,11 @@ class Mobil extends Model
     public function spek(): BelongsToMany
     {
         return $this->belongsToMany(Spek::class);
+    }
+
+    public function pesanan(): HasMany
+    {
+        return $this->hasMany(Pesanan::class);
     }
 
 }

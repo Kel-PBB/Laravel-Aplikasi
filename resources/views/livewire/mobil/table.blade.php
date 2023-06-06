@@ -40,7 +40,7 @@
                         Transmisi
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Tanggal Tersedia
+                        Gambar Mobil
                     </th>
                 </tr>
             </thead>
@@ -72,6 +72,9 @@
                     </td>
                     <td class="px-6 py-4">
                         {{ $mobil->transmisi }}
+                    </td>
+                    <td class="px-6 py-4">
+                        <img src="{{ asset('storage/'. $mobil->gambar) }}" class="h-20" alt="">
                     </td>
                     
                     <td class="px-6 py-4">

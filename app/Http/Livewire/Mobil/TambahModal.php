@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Mobil;
 
 use App\Models\Mobil;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Illuminate\Http\UploadedFile;
 
 class TambahModal extends Component
 {
+    use WithFileUploads;
     protected $rules = [
         'nama' => 'required',
         'brand' => 'required',
@@ -15,6 +18,7 @@ class TambahModal extends Component
         'bahan_bakar' => 'required',
         'transmisi' => 'required',
         'harga' => 'required',
+        'gambar_mobil' => 'nullable|image|mimes:jpg,png,jpeg'
     ];
 
     public $tambahkanMobil = false;
@@ -26,6 +30,9 @@ class TambahModal extends Component
     public $harga = '';
     public $bahan_bakar = '';
     public $transmisi = '';
+    public $gambar_mobil;
+    public $gambarurl;
+
     
     public function tambahMobil()
     {
@@ -36,7 +43,9 @@ class TambahModal extends Component
 
     public function masukMobil()
     {
+        // dd($this);
         $this->validate();
+        $path = $this->gambar_mobil->store('mobil');
 
         $mobil = Mobil::create([
             'nama' => $this->nama,
@@ -46,6 +55,7 @@ class TambahModal extends Component
             'bahan_bakar' => $this->bahan_bakar,
             'transmisi' => $this->transmisi,
             'harga' => $this->harga,
+            'gambar' => $path
         ]);
 
         $this->resetInput();
@@ -62,6 +72,12 @@ class TambahModal extends Component
         $this->bahan_bakar = null;
         $this->transmisi = null;
         $this->harga = null;
+        $this->gambar_mobil = null;
+    }
+
+    public function focusMyInput()
+    {
+        $this->dispatchBrowserEvent('focusInput');
     }
 
     public function render()

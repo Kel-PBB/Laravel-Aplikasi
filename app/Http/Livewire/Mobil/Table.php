@@ -9,13 +9,20 @@ class Table extends Component
 {
     public $hapusMobil = false;
     public $delid = '';
+
+    protected $listeners = [
+        'mobilMasuk' => 'handleMasuk'
+    ];
     public function render()
     {
         // $mobil = Mobil::find(1);
-        // foreach($mobil->spek as $s){
+        // $mobil = Mobil::whereHas('pesanan', function ($query){
+        //     $query->whereNot('tanggal_rental_mulai', 'like', '2023-06-03');
+        // })->get();
+        // // foreach($mobil->spek as $s){
 
-        // }
-        // dd($mobil->spek);
+        // // }
+        // dd($mobil);
         return view('livewire.mobil.table', [
             'mobils' => Mobil::all()
         ]);
@@ -28,6 +35,12 @@ class Table extends Component
         $this->delid = $id;
         $this->hapusMobil = true;
     }
+
+    public function handleMasuk($mobil)
+    {
+        
+    }
+
 
     public function hapusMobil()
     {

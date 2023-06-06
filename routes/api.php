@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\APi\MobilController;
+use App\Http\Controllers\Api\PesananController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +17,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::post('/coba', function(){
+    return "User";
+});
+Route::post('/register', [AuthController::class, 'store']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::group(['middleware'=>['auth:sanctum']], function(){
+    Route::post('/search', [MobilController::class, 'search']);
+    Route::get('/list', [MobilController::class, 'list']);
+    Route::post('/tambah', [PesananController::class, 'store']);
 });
