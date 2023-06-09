@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\APi\MobilController;
-use App\Http\Controllers\Api\PesananController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\APi\MobilController;
+use App\Http\Controllers\Api\InvoiceController;
+use App\Http\Controllers\Api\PesananController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,10 +26,32 @@ use Illuminate\Support\Facades\Route;
 Route::post('/coba', function(){
     return "User";
 });
-Route::post('/register', [AuthController::class, 'store']);
+Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::group(['middleware'=>['auth:sanctum']], function(){
+
     Route::post('/search', [MobilController::class, 'search']);
     Route::get('/list', [MobilController::class, 'list']);
-    Route::post('/tambah', [PesananController::class, 'store']);
+
+    Route::prefix('mobil')->group(function(){
+        Route::get('/show/{kode_mobil}', [MobilController::class, 'show']);
+    });
+
+    Route::prefix('pesanan')->group(function(){
+        Route::get('/show/{kode_pesanan}', [PesananController::class, 'show']);
+        Route::get('/list', [PesananController::class, 'index']);
+        Route::get('/form', [PesananController::class, 'form']);
+        Route::post('/tambah', [PesananController::class, 'store']);
+    });
+
+    Route::prefix('invoice')->group(function(){
+        Route::get('/show/{kode_invoice}', [InvoiceController::class, 'show']);
+        Route::post('/buktiTransfer', [InvoiceController::class, 'updateImage']);
+    });
+
+    Route::prefix('user')->group(function(){
+        Route::get('/profile', [UserController::class, 'show']);
+        // Route::post('/update', [UserController::class, 'update']);
+    });
+
 });

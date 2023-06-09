@@ -28,4 +28,10 @@ Route::middleware([
     Route::get('/mobil', function () {
         return view('livewire.mobil.show');
     })->name('mobil');
+    Route::get('/pesanan', function () {
+        return view('livewire.pesanan.show');
+    })->name('pesanan');
+    Route::get('/invoice', function () {
+        return view('livewire.invoice.show');
+    })->name('invoice');
 });

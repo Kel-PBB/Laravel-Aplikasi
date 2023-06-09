@@ -19,7 +19,8 @@ return new class extends Migration
             $table->date('tanggal_rental_mulai');
             $table->date('tanggal_rental_selesai');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            // $table->foreignId('status_id')->references('id')->on('statuses')->onDelete('cascade');
+            $table->string('total');
+            $table->foreignId('status_id')->references('id')->on('pesanan_statuses')->onDelete('cascade');
             $table->timestamps();
         });
     }

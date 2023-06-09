@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama_bank');
             $table->string('norek');
             $table->string('total');
+            $table->string('gambar_invoice')->nullable();
             $table->foreignId('status_id')->references('id')->on('statuses')->onDelete('cascade');
             $table->timestamps();
         });

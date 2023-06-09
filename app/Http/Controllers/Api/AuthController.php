@@ -28,20 +28,6 @@ class AuthController extends RegisteredUserController
     protected $guard;
     protected $registrar;
 
-    protected function failedValidation($request, $validator)
-    {
-        if ($request->wantsJson()) {
-            $response = [
-                'message' => 'The given data was invalid.',
-                'errors' => $validator->errors(),
-            ];
-
-            throw new HttpResponseException(Response::json($response, JsonResponse::HTTP_UNPROCESSABLE_ENTITY));
-        }
-
-        parent::failedValidation($request, $validator);
-    }
-
     public function register(Request $request, CreatesNewUsers $creator)
     {
 
@@ -50,12 +36,10 @@ class AuthController extends RegisteredUserController
 
         $token = $user->createToken('apitoken')->plainTextToken;
 
-        $res = [
-            'user' => $user,
+        return response()->json([
+            'message' => 'Pendaftaran Berhasil',
             'token' => $token
-        ];
-
-        return app(RegisterResponse::class)->json(['message' => 'Pendaftaran Berhasil']);
+        ]);
         
         // return response()->json(['message' => 'User berhasil'], 201);
     }
@@ -68,8 +52,10 @@ class AuthController extends RegisteredUserController
             $user = Auth::user();
             if($user instanceof \App\Models\User){
                 $token = $user->createToken('auth-token')->plainTextToken;
+                // $pesanan = $user->pesanans();
                 return response()->json([
                     'token' => $token,
+                    // 'pesanans' => $pesanan,
                     'message' => 'Login Berhasil'
                 ]);
             }
@@ -79,12 +65,12 @@ class AuthController extends RegisteredUserController
         ], 401);
     }
 
-    public function store(Request $request, CreatesNewUsers $creator): RegisterResponse
-    {
-        event(new Registered($user = $creator->create($request->all())));
+    // public function store(Request $request, CreatesNewUsers $creator)
+    // {
+    //     $creator->create($request->all());
 
-        // $this->guard->login($user);
+    //     // $this->guard->login($user);
 
-        return app(RegisterResponse::class)->json(['message' => 'Pendaftaran Berhasil']);
-    }
+    //     return response()->json(['message' => 'Pendaftaran Berhasil']);
+    // }
 }

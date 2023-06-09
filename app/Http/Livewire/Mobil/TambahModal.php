@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Mobil;
 
+use App\Helpers\Helper;
 use App\Models\Mobil;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -47,9 +48,12 @@ class TambahModal extends Component
         $this->validate();
         $path = $this->gambar_mobil->store('mobil');
 
+        $kode_mobil = Helper::PesananIDGenerator(new Mobil, 'kode_mobil', 5, 'M');
+
         $mobil = Mobil::create([
             'nama' => $this->nama,
             'brand' => $this->brand,
+            'kode_mobil' => $kode_mobil,
             'mesin' => $this->mesin,
             'seat' => $this->seat,
             'bahan_bakar' => $this->bahan_bakar,
